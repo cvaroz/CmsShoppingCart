@@ -264,7 +264,7 @@ namespace CmsShoppingCart.Controllers
             // Email admin
             var client = new SmtpClient("mailtrap.io", 2525)
             {
-                Credentials = new NetworkCredential("21f57cbb94cf88", "e9d7055c69f02d"),
+                Credentials = new NetworkCredential("7b1ed9beffe38b", "cfc8fcc3fdafce"),
                 EnableSsl = true
             };
             client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number " + orderId);
