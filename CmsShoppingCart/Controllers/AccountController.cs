@@ -143,6 +143,7 @@ namespace CmsShoppingCart.Controllers
         [Authorize]
         public ActionResult Logout()
         {
+            Session["cart"] = null;
             FormsAuthentication.SignOut();
             return Redirect("~/account/login");
         }
