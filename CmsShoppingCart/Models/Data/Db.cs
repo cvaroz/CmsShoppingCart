@@ -17,5 +17,7 @@ namespace CmsShoppingCart.Models.Data
         public DbSet<UserRoleDTO> UserRoles { get; set; }
         public DbSet<OrderDTO> Orders { get; set; }
         public DbSet<OrderDetailsDTO> OrderDetails { get; set; }
+
+        public System.Data.Entity.DbSet<CmsShoppingCart.Models.ViewModels.Account.UserVM> UserVMs { get; set; }
     }
 }
