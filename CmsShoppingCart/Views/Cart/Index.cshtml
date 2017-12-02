@@ -72,7 +72,10 @@ else
             <td></td>
             <td class="grandtotal"><b>Grand total</b> $<span>@ViewBag.GrandTotal</span></td>
         </tr>
+       
+    
 
+        @*///////////////////Cliente  *@
     </table>
 
     <div class="paypaldiv">
@@ -88,7 +91,7 @@ else
                 <input type="hidden" name="quantity_@count" value="@item.Quantity">
                 count++;
             }
-
+            <input type="hidden" name="return" value="http://192.168.0.14:50036/Cart">
             <input type="hidden" name="currency_code" value="USD">
             <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
         </form>
@@ -97,6 +100,8 @@ else
     <a href="#" class="placeorder btn btn-primary pull-right">PayPal</a>
 
 }
+
+@*///////////////////Cliente  *@
 
 @section Scripts {
 <script>
