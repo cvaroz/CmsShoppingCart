@@ -72,161 +72,233 @@ else
             <td></td>
             <td class="grandtotal"><b>Grand total</b> $<span>@ViewBag.GrandTotal</span></td>
         </tr>
-       
-    
 
-        @*///////////////////Cliente  *@
     </table>
 
-    <div class="paypaldiv">
-        <form class="paypalform" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-            <input type="hidden" name="cmd" value="_cart">
-            <input type="hidden" name="upload" value="1">
-            <input type="hidden" name="business" value="C.Varos-facilitator@hotmail.com">
+    /////////////////////Empleado
 
-            @foreach (var item in Model)
-            {
-                <input type="hidden" name="item_name_@count" value="@item.ProductName">
-                <input type="hidden" name="amount_@count" value="@item.Price">
-                <input type="hidden" name="quantity_@count" value="@item.Quantity">
-                count++;
-            }
-            <input type="hidden" name="return" value="http://192.168.0.14:50036/Cart">
-            <input type="hidden" name="currency_code" value="USD">
-            <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
-        </form>
+    <div class="checkout">
+
+        <table class="table">
+
+            <tr>
+                <td class="grandtotal"><b>Grand total</b> $<span>@ViewBag.GrandTotal</span></td>
+            </tr>
+
+            <tr>
+
+                <td>
+                    Cash  :   @Html.TextBox("Cash")
+                </td>
+
+            </tr>
+            <tr>
+
+                <td>
+                    Change: @Html.TextBox("Change")
+                </td>
+
+            </tr>
+
+        </table>
+        <a href="#" class="placeorderEmployee btn btn-primary pull-left">Checkout</a>
+
     </div>
-    <br />
-    <a href="#" class="placeorder btn btn-primary pull-right">PayPal</a>
+    ///////////////////Empleado
 
-}
 
-@*///////////////////Cliente  *@
+        @*///////////////////Cliente  *@
 
-@section Scripts {
-<script>
+        <div class="paypaldiv">
+            <form class="paypalform" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                <input type="hidden" name="cmd" value="_cart">
+                <input type="hidden" name="upload" value="1">
+                <input type="hidden" name="business" value="C.Varos-facilitator@hotmail.com">
+                @foreach (var item in Model)
+                {
+                    <input type="hidden" name="item_name_@count" value="@item.ProductName">
+                    <input type="hidden" name="amount_@count" value="@item.Price">
+                    <input type="hidden" name="quantity_@count" value="@item.Quantity">
+                    count++;
+                }
+                <input type="hidden" name="return" value="http://192.168.0.14:50036/Cart">
+                <input type="hidden" name="currency_code" value="USD">
+                <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
+            </form>
+        </div>
+        <br />
+        <a href="#" class="placeorder btn btn-primary pull-right">PayPal</a>
+        }
 
-$(function () {
+        @*///////////////////Cliente  *@
 
-    /*
-    * Increment product
-    */
 
-    $("a.incrproduct").click(function (e) {
-        e.preventDefault();
+        @section Scripts {
+            <script>
 
-        var productId = $(this).data("id");
-        var url = "/cart/IncrementProduct";
+                $(function () {
 
-        $.getJSON(url, { productId: productId }, function (data) {
+                    /*
+                    * Increment product
+                    */
 
-            $("td.qty" + productId).html(data.qty);
+                    $("a.incrproduct").click(function (e) {
+                        e.preventDefault();
 
-            var price = data.qty * data.price;
-            var priceHtml = "$" + price.toFixed(2);
+                        var productId = $(this).data("id");
+                        var url = "/cart/IncrementProduct";
 
-            $("td.total" + productId).html(priceHtml);
+                        $.getJSON(url, { productId: productId }, function (data) {
 
-            var gt = parseFloat($("td.grandtotal span").text());
-            var grandtotal = (gt + data.price).toFixed(2);
+                            $("td.qty" + productId).html(data.qty);
 
-            $("td.grandtotal span").text(grandtotal);
-        }).done(function (data) {
-            var url2 = "/cart/PaypalPartial";
+                            var price = data.qty * data.price;
+                            var priceHtml = "$" + price.toFixed(2);
 
-            $.get(url2, { }, function (data) {
-                $('div.paypaldiv').html(data);
-            });
-        });
-    });
+                            $("td.total" + productId).html(priceHtml);
 
-    //////////////////////////////////////////////////////////////
+                            var gt = parseFloat($("td.grandtotal span").text());
+                            var grandtotal = (gt + data.price).toFixed(2);
 
-    /*
-    * Decrement product
-    */
+                            $("td.grandtotal span").text(grandtotal);
+                        }).done(function (data) {
+                            var url2 = "/cart/PaypalPartial";
 
-    $("a.decrproduct").click(function (e) {
-        e.preventDefault();
+                            $.get(url2, {}, function (data) {
+                                $('div.paypaldiv').html(data);
+                            });
+                        });
+                    });
 
-        var $this = $(this);
-        var productId = $(this).data("id");
-        var url = "/cart/DecrementProduct";
+                    //////////////////////////////////////////////////////////////
 
-        $.getJSON(url, { productId: productId }, function (data) {
-            if (data.qty == 0) {
-                $this.parent().parent().fadeOut("fast", function () {
-                    location.reload();
+                    /*
+                    * Decrement product
+                    */
+
+                    $("a.decrproduct").click(function (e) {
+                        e.preventDefault();
+
+                        var $this = $(this);
+                        var productId = $(this).data("id");
+                        var url = "/cart/DecrementProduct";
+
+                        $.getJSON(url, { productId: productId }, function (data) {
+                            if (data.qty == 0) {
+                                $this.parent().parent().fadeOut("fast", function () {
+                                    location.reload();
+                                });
+                            }
+                            else {
+                                $("td.qty" + productId).html(data.qty);
+
+                                var price = data.qty * data.price;
+                                var priceHtml = "$" + price.toFixed(2);
+
+                                $("td.total" + productId).html(priceHtml);
+
+                                var gt = parseFloat($("td.grandtotal span").text());
+                                var grandtotal = (gt - data.price).toFixed(2);
+
+                                $("td.grandtotal span").text(grandtotal);
+                            }
+
+                        }).done(function (data) {
+                            var url2 = "/cart/PaypalPartial";
+
+                            $.get(url2, {}, function (data) {
+                                $('div.paypaldiv').html(data);
+                            });
+                        });
+                    });
+
+                    //////////////////////////////////////////////////////////////
+
+                    /*
+                    * Remove product
+                    */
+
+                    $("a.removeproduct").click(function (e) {
+                        e.preventDefault();
+
+                        var $this = $(this);
+                        var productId = $(this).data("id");
+                        var url = "/cart/RemoveProduct";
+
+                        $.get(url, { productId: productId }, function (data) {
+                            location.reload();
+                        });
+                    });
+
+                    //////////////////////////////////////////////////////////////
+
+                    /*
+                    * Place order Client
+                    */
+
+                    $("a.placeorder").click(function (e) {
+                        e.preventDefault();
+
+                        var $this = $(this);
+
+                        var url = "/cart/PlaceOrder";
+
+                        $(".ajaxbg").show();
+
+                        $.post(url, {}, function (data) {
+                            $(".ajaxbg span").text("Thank you. You will now be redirected to paypal.");
+                            setTimeout(function () {
+                                $('form input[name="submit"]').click();
+                            }, 2000);
+                        });
+                    });
+
+                    //////////////////////////////////////////////////////////////
+
+
+                    /*
+                    * Place order Employee
+                    */
+
+                    $("a.placeorderEmployee").click(function (e) {
+                        e.preventDefault();
+
+                        var $this = $(this);
+
+                        var url = "/cart/PlaceOrder";
+
+                    });
+
+
+                     //////////////////////////////////////////////////////////////
+
+
+                     /*
+                    * Show change
+                    */
+
+                    $(function () {
+                        $("#Cash").change(function () {
+                            if ($("#Cash").val().length > 0 ) {
+
+                                $("#Change").val(function () {
+                                    // Do something to populate #txtb ex: Peter
+                                    var myVar = $("#Cash").val()-@ViewBag.GrandTotal;
+
+                                    return myVar;
+                                });
+
+                            }
+                            else {
+                                $("#Change").val("");
+                            }
+                        });
+                    });
+
+
+                    //////////////////////////////////////////////////////////////
+
                 });
-            }
-            else {
-                $("td.qty" + productId).html(data.qty);
 
-                var price = data.qty * data.price;
-                var priceHtml = "$" + price.toFixed(2);
-
-                $("td.total" + productId).html(priceHtml);
-
-                var gt = parseFloat($("td.grandtotal span").text());
-                var grandtotal = (gt - data.price).toFixed(2);
-
-                $("td.grandtotal span").text(grandtotal);
-            }
-
-        }).done(function (data) {
-            var url2 = "/cart/PaypalPartial";
-
-            $.get(url2, {}, function (data) {
-                $('div.paypaldiv').html(data);
-            });
-        });
-    });
-
-    //////////////////////////////////////////////////////////////
-
-    /*
-    * Remove product
-    */
-
-    $("a.removeproduct").click(function (e) {
-        e.preventDefault();
-
-        var $this = $(this);
-        var productId = $(this).data("id");
-        var url = "/cart/RemoveProduct";
-
-        $.get(url, { productId: productId }, function (data) {
-            location.reload();
-        });
-    });
-
-    //////////////////////////////////////////////////////////////
-
-    /*
-    * Place order
-    */
-
-    $("a.placeorder").click(function (e) {
-        e.preventDefault();
-
-        var $this = $(this);
-
-        var url = "/cart/PlaceOrder";
-
-        $(".ajaxbg").show();
-
-        $.post(url, { }, function (data) {
-            $(".ajaxbg span").text("Thank you. You will now be redirected to paypal.");
-            setTimeout(function () {
-                $('form input[name="submit"]').click();
-            }, 2000);
-        });
-    });
-
-    //////////////////////////////////////////////////////////////
-
-});
-
-</script>
-
-}
+            </script>
+        }

@@ -212,6 +212,10 @@ namespace CmsShoppingCart.Controllers
             return PartialView(cart);
         }
 
+        // GET: /Cart/Calculate
+        public void Calculate()
+        { }
+
         // POST: /Cart/PlaceOrder
         [HttpPost]
         public void PlaceOrder()
