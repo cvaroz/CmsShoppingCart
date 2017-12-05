@@ -37,7 +37,7 @@
                         }
                     }
 
-                    @if (Request.IsAuthenticated && User.IsInRole("User"))
+                    @if (Request.IsAuthenticated && User.IsInRole("User") || Request.IsAuthenticated && User.IsInRole("Employee"))
                     {
                         if (ViewBag.Title == "User Profile" || ViewBag.Title == "Orders")
                         {
@@ -49,20 +49,27 @@
                         }
                     }
                 </ul>
-
                 @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                 {
                     <ul class="navbar-collapse collapse navbar-right adminarea">
-                        <li>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null ) </li>
+                        <li>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null) </li>
                     </ul>
                 }
                 else
                 {
-                    if (ViewBag.Title != "Cart Details")
+
+                    if (Request.IsAuthenticated)
                     {
-                        <ul class="navbar-collapse collapse navbar-right">
-                            @Html.Action("CartPartial", "Cart")
-                        </ul>
+
+
+
+                        if (ViewBag.Title != "Cart Details")
+                        {
+                            <ul class="navbar-collapse collapse navbar-right">
+                                @Html.Action("CartPartial", "Cart")
+                            </ul>
+                        }
+
                     }
                 }
 
