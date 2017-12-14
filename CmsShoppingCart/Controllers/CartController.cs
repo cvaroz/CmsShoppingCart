@@ -1,5 +1,6 @@
 ﻿using CmsShoppingCart.Models.Data;
 using CmsShoppingCart.Models.ViewModels.Cart;
+using CmsShoppingCart.Models.ViewModels.Shop;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -241,7 +242,7 @@ namespace CmsShoppingCart.Controllers
 
         // POST: /Cart/PlaceOrder
         [HttpPost]
-        public void PlaceOrder()
+        public void PlaceOrder(ProductVM model)
         {
             // Get cart list
             List<CartVM> cart = Session["cart"] as List<CartVM>;
@@ -286,6 +287,25 @@ namespace CmsShoppingCart.Controllers
 
                     db.SaveChanges();
                 }
+            }
+
+            //Reduce stock
+
+            using (Db db = new Db())
+            {
+
+                OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
+                
+                foreach (var item in cart)
+                {
+                    ProductDTO dto = db.Products.Find(item.ProductId);
+
+                    dto.Stock = dto.Stock-item.Quantity;
+
+
+                    db.SaveChanges();
+                }
+               
             }
 
             // Email admin

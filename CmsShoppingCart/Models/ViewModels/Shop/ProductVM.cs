@@ -24,6 +24,7 @@ namespace CmsShoppingCart.Models.ViewModels.Shop
             CategoryName = row.CategoryName;
             CategoryId = row.CategoryId;
             ImageName = row.ImageName;
+            Stock = row.Stock;
         }
 
         public int Id { get; set; }
@@ -37,6 +38,7 @@ namespace CmsShoppingCart.Models.ViewModels.Shop
         [Required]
         public int CategoryId { get; set; }
         public string ImageName { get; set; }
+        public int Stock { get; set; }
 
         public IEnumerable<SelectListItem> Categories { get; set; }
         public IEnumerable<string> GalleryImages { get; set; }

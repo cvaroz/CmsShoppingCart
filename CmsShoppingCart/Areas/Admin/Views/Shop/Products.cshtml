@@ -43,6 +43,9 @@
         <th>
             Image Name
         </th>
+        <th>
+            Stock
+        </th>
         <th></th>
     </tr>
 
@@ -62,6 +65,9 @@
                 <a href="/admin/shop/EditProduct/@product.Id">
                     <img src="/Images/Uploads/Products/@product.Id/Thumbs/@product.ImageName" />
                 </a>
+            </td>
+            <td>
+                @product.Stock
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditProduct", new { id = product.Id }) |

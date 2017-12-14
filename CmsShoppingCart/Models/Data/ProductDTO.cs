@@ -19,6 +19,7 @@ namespace CmsShoppingCart.Models.Data
         public string CategoryName { get; set; }
         public int CategoryId { get; set; }
         public string ImageName { get; set; }
+        public int Stock { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual CategoryDTO Category { get; set; }

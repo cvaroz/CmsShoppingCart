@@ -193,6 +193,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 product.Description = model.Description;
                 product.Price = model.Price;
                 product.CategoryId = model.CategoryId;
+                product.Stock = model.Stock;
 
                 CategoryDTO catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
                 product.CategoryName = catDTO.Name;
@@ -393,6 +394,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
                 dto.Price = model.Price;
                 dto.CategoryId = model.CategoryId;
                 dto.ImageName = model.ImageName;
+                dto.Stock = model.Stock;
 
                 CategoryDTO catDTO = db.Categories.FirstOrDefault(x => x.Id == model.CategoryId);
                 dto.CategoryName = catDTO.Name;
