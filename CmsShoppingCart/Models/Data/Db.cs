@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CmsShoppingCart.Areas.Admin.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace CmsShoppingCart.Models.Data
         public DbSet<RoleDTO> Roles { get; set; }
         public DbSet<UserRoleDTO> UserRoles { get; set; }
         public DbSet<OrderDTO> Orders { get; set; }
+        public DbSet<CashDeskClosingDTO> CashDesksClosing { get; set; }
+        public DbSet<CashDeskClosingDetailsDTO> CashDesksClosingDetails { get; set; }
         public DbSet<OrderDetailsDTO> OrderDetails { get; set; }
 
         public System.Data.Entity.DbSet<CmsShoppingCart.Models.ViewModels.Account.UserVM> UserVMs { get; set; }
