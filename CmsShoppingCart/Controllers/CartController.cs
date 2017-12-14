@@ -34,11 +34,15 @@ namespace CmsShoppingCart.Controllers
                 total += item.Total;
             }
 
+            ViewBag.Discount = Decimal.ToDouble(total) * 0.90;
             ViewBag.GrandTotal = total;
+            
 
             // Return view with list
             return View(cart);
         }
+
+
 
         public ActionResult CartPartial()
         {
@@ -132,6 +136,31 @@ namespace CmsShoppingCart.Controllers
 
             // Return partial view with model
             return PartialView(model);
+        }
+
+        // GET: /Cart/Discount
+        public ActionResult Discount()
+        {
+            // Init cart list
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            using (Db db = new Db())
+
+            {
+
+                // Get cartVM from list
+                CartVM model = cart.FirstOrDefault();
+
+                decimal multi= 0.90m;
+
+                model.Total = Decimal.Multiply(model.Total, multi);
+
+                var result = new { model.Total };
+            // Return json with data
+             return Json(result, JsonRequestBehavior.AllowGet);
+
+             }
+
         }
 
         // GET: /Cart/IncrementProduct

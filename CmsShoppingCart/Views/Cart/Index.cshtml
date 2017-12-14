@@ -57,26 +57,31 @@ else
                 </td>
             </tr>
         }
+
+
+        @*////////////////////Descuento*@
+
+        @*////////////////////Descuento*@
+
         <tr>
             <td></td>
             <td></td>
+            <td>  Descuento    @Html.TextBox("Descuento") </td>
             <td></td>
-            <td></td>
-            <td></td>
+            <td ><a href="#" class="applyDiscount btn btn-default ">Aplicar descuento</a></td>
             <td></td>
             <td class="grandtotal"><b>Grand total</b> $<span>@ViewBag.GrandTotal</span></td>
         </tr>
     </table>
 
 
-    ////////Pablo
-
+   
     /////////////////////Empleado
 
 
     if (User.IsInRole("Employee"))
     {
-        
+
         <div class="checkout">
 
             <table class="table">
@@ -101,7 +106,7 @@ else
                 </tr>
 
             </table>
-  
+
             <a href="#" class="placeorderEmployee btn btn-primary pull-left">Checkout</a>
 
         </div>
@@ -116,9 +121,9 @@ else
 
 
 
-    if (User.IsInRole("User"))
-    {
-    
+if (User.IsInRole("User"))
+{
+
     <div class="paypaldiv">
         <form class="paypalform" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
             <input type="hidden" name="cmd" value="_cart">
@@ -136,7 +141,7 @@ else
             <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
         </form>
     </div>
-        <br />
+    <br />
         <a href="#" class="placeorder btn btn-primary pull-right">PayPal</a>
     }
 
@@ -149,8 +154,45 @@ else
     <script>
 
         $("a.placeorderEmployee").hide();
+        //document.getElementById('errorDescuento').style.display = 'none';
 
         $(function () {
+
+
+
+
+
+
+            $("a.applyDiscount").click(function (e) {
+
+                e.preventDefault();
+
+
+
+                    if ($("#Descuento").val() == "DIGI10") {
+
+                        var url = "/cart/Discount";
+
+                       
+                            var gt = parseFloat($("td.grandtotal span").text());
+                            var grandtotal = (gt).toFixed(2);
+
+                            $("td.grandtotal span").text(grandtotal*0.90);
+                        
+
+                    }else {
+
+                        $("#Descuento").val("Codigo Incorrecto")
+                            //< label id= "errorDescuento" name= "Codigo Incorrecto" ></label >
+
+                     }
+
+            });
+
+
+
+            //////////////////////////////////////////////////////////////
+
 
             /*
             * Increment product
@@ -319,10 +361,10 @@ else
                         $("#Change").val(function () {
                             // Do something to populate #txtb ex: Peter
 
-                            var myVar = $("#Cash").val() -@ViewBag.GrandTotal;
+                            var myVar;
 
                             if ($("#Cash").val() > @ViewBag.GrandTotal || $("#Cash").val() == @ViewBag.GrandTotal  )  {
-                        
+                                myVar = $("#Cash").val() - @ViewBag.GrandTotal;
                                 $("a.placeorderEmployee").show();
                                 return myVar;
                                 location.reload();
@@ -333,7 +375,7 @@ else
                                 return myVar;
                                 location.reload();
                              }
-                            
+
 
                         });
 
@@ -344,12 +386,16 @@ else
                     }
                 });
 
-                
+
 
             });
 
 
+
+
             //////////////////////////////////////////////////////////////
+
+
 
         });
 

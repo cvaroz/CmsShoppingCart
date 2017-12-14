@@ -259,7 +259,7 @@ namespace CmsShoppingCart.Controllers
         }
 
         // GET: /account/Orders
-        [Authorize(Roles="User")]
+        [Authorize(Roles= "User,Employee")]
         public ActionResult Orders()
         {
             // Init list of OrdersForUserVM
@@ -302,6 +302,10 @@ namespace CmsShoppingCart.Controllers
                         productsAndQty.Add(productName, orderDetails.Quantity);
 
                         // Get total
+                        if (orderDetails.)
+                        {
+
+                        }
                         total += orderDetails.Quantity * price;
                     }
 
