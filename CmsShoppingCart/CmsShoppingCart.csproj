@@ -184,6 +184,13 @@
     </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\carucel\arroz.jpg" />
+    <Content Include="Content\carucel\casado.jpg" />
+    <Content Include="Content\carucel\chifrijo.jpg" />
+    <Content Include="Content\carucel\chorreadas.jpg" />
+    <Content Include="Content\carucel\Gallo.jpg" />
+    <Content Include="Content\carucel\olla.jpg" />
+    <Content Include="Content\carucel\tamal.jpg" />
     <Content Include="Content\fancybox\blank.gif" />
     <Content Include="Content\fancybox\fancybox_buttons.png" />
     <Content Include="Content\fancybox\fancybox_loading%402x.gif" />
